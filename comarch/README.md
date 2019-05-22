@@ -25,12 +25,18 @@ IClassFactory
 virtual HRESULT \_\_stdcall CreateInstance(IUnknown* pUnknownOuter,
 	                                         const IID& iid,
 	                                         void** ppv) ;
-普通库         GetInterface
-插件支持库     WSCreateInstance
- 第一次加载所有插件
- 然后根据模块guid得到模块句柄HMODULE （这一步guid找库获取库的控制权，仅仅是通过配置文件guid和库映射来找到，guid并不代表库的真正guid）
-插件库
- 根据句柄获取插件库通用接口DllGetClassObject
- 直接交给CFactory::GetClassObject(clsid, iid, ppv)获得CFactory
- 从CFactory获得IClassFactory
- 验证库的guid和
+普通库         GetInterface 
+  动态加载插件支持库句柄   
+  获取WSCreateInstance接口
+插件支持库     WSCreateInstance  
+  第一次加载所有插件  
+  然后根据模块guid得到模块句柄HMODULE （这一步guid找库获取库的控制权，模块guid和库是多对一的关系，）   
+插件库  
+ 根据句柄获取插件库通用接口DllGetClassObject  
+ 直接交给CFactory::GetClassObject(clsid, iid, ppv) 
+ 根据模块guid从工厂模板列表中找到工厂模板
+ 用工厂模板初始化CFactory并获取工厂IUnknown接口  
+ 从CFactory的IUnknown查询获得IClassFactory  
+ IClassFactory的CreateInstance接口去调用工厂模板入口，得到com接口
+ 通过com接口来查询iid接口得到最终接口
+ 拿到最终接口调用方法
