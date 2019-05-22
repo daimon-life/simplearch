@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <!--CLSID_NLERelink-->
+  <CLSID id="{27F97E51-DCB4-44D4-9E19-9A7154524D4B}" name="Core.dll"></CLSID>
+  <!--CLSID_NLEFrameManager-->
+  <CLSID id="{A97B62E3-6E61-4347-83B9-1AB5CB738BE0}" name="Gui.dll"></CLSID>
+</Root>
