@@ -19,3 +19,18 @@ st->op1()->op2->op3->op4->op5->op6->op7->op8->op9->en
 * STDAPI DllGetClassObject(const CLSID& clsid,const IID& iid,void\*\* ppv)
 * STDAPI DllRegisterServer()
 * STDAPI DllUnregisterServer()
+CFactory来具体实现
+
+IClassFactory
+virtual HRESULT \_\_stdcall CreateInstance(IUnknown* pUnknownOuter,
+	                                         const IID& iid,
+	                                         void** ppv) ;
+普通库         GetInterface
+插件支持库     WSCreateInstance
+ 第一次加载所有插件
+ 然后根据模块guid得到模块句柄HMODULE （这一步guid找库获取库的控制权，仅仅是通过配置文件guid和库映射来找到，guid并不代表库的真正guid）
+插件库
+ 根据句柄获取插件库通用接口DllGetClassObject
+ 直接交给CFactory::GetClassObject(clsid, iid, ppv)获得CFactory
+ 从CFactory获得IClassFactory
+ 验证库的guid和
