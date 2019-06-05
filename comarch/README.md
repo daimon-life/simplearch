@@ -1,12 +1,12 @@
 ```flow
 st=>start: 开始 
 en=>end: 结束 
-op1=>operation: 静态获取接口GetInterface(指定模块guid和接口guid)
-op2=>operation: 动态获取接口WSCreateInstance
-op3=>operation: 解析配置文件加载插件库信息
-op4=>operation: 插件库信息根据guid找到库HMODULE
+op1=>operation: dll的导出库NLECommon.lib静态获取接口GetInterface(指定模块guid和接口guid)
+op2=>operation: 动态加载NLECOMSupport.dll，并获取接口WSCreateInstance
+op3=>operation: 解析插件配置文件加载插件库信息
+op4=>operation: 插件库信息根据guid找到库dll动态库，并加载得到HMODULE
 op5=>operation: 获得DllGetClassObject
-op6=>operation: 静态函数CFactory::GetClassObject(clsid, iid, ppv);
+op6=>operation: 静态函数CFactory::GetClassObject(clsid, iid, ppv)，并根据clsid找到CFactoryTemplate;
 op7=>operation: CFactoryTemplate来初始化CFactory并返回工厂到ppv;
 op8=>operation: CFactory的CreateInstance来创建接口实例;
 op9=>operation: CFactoryTemplate模板中CreateInstance;
